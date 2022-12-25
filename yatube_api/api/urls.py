@@ -1,20 +1,19 @@
 """Навигация и роутеры."""
-from rest_framework.routers import SimpleRouter
+from rest_framework.routers import DefaultRouter
 from django.urls import include, path
 from rest_framework.authtoken import views
-from .views import PostViewSet#, CommentViewSet, GroupViewSet
+from .views import PostViewSet, GroupViewSet, CommentViewSet
 
 app_name = 'api'
 
 
-router = SimpleRouter()
+router = DefaultRouter()
 
 router.register('posts', PostViewSet)
-# router.register('groups', GroupViewSet)
-# router.register(r'posts/(?P<post_id>\d+)/comments', CommentViewSet,
-#                 basename='comment',
-#                 ),
-# router.register('users', UserViewSet)
+router.register('groups', GroupViewSet)
+router.register(r'posts/(?P<post_id>\d+)/comments', CommentViewSet,
+                basename='comment',
+                )
 
 urlpatterns = [
     path('v1/api-token-auth/', views.obtain_auth_token),

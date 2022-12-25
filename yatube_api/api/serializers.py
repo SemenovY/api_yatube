@@ -1,6 +1,6 @@
 """Сериализаторы для моделей пост."""
 from rest_framework import serializers
-from posts.models import Comment, Group, Post
+from posts.models import  Post#, Comment, Group
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -10,15 +10,15 @@ class PostSerializer(serializers.ModelSerializer):
         fields = ('id', 'text', 'author', 'image', 'pub_date')
 
 
-class GroupSerializer(serializers.ModelSerializer):
-    """Сериализатор для модели yatube_api.models Group."""
-    class Meta:
-        model = Group
-        fields = ('id', 'title', 'slug', 'description')
+# class GroupSerializer(serializers.ModelSerializer):
+#     """Сериализатор для модели yatube_api.models Group."""
+#     class Meta:
+#         model = Group
+#         fields = ('id', 'title', 'slug', 'description')
 
 
-class CommentSerializer(serializers.ModelSerializer):
-    """Сериализатор для модели yatube_api.models Comment."""
-    class Meta:
-        model = Comment
-        fields = ('id', 'text', 'author', 'post', 'created')
+# class CommentSerializer(serializers.ModelSerializer):
+#     """Сериализатор для модели yatube_api.models Comment."""
+#     class Meta:
+#         model = Comment
+#         fields = ('id', 'text', 'author', 'post', 'created')

@@ -51,7 +51,7 @@ class Post(models.Model):
         blank=True,
         verbose_name='Картинка к посту',
         help_text='Добавьте каринку к посту',
-    )  # поле для картинки
+    )
     group = models.ForeignKey(
         Group, on_delete=models.SET_NULL,
         related_name='posts',

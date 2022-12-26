@@ -27,7 +27,7 @@ class PostViewSet(viewsets.ModelViewSet):
         """При запросе на удаление данных
         осуществлять проверку прав."""
         if serializer.author != self.request.user:
-            raise PermissionDenied('Изменение чужого контента запрещено!')
+            raise PermissionDenied('Удаление чужого контента запрещено!')
         super().perform_destroy(serializer)
 
 
@@ -44,8 +44,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         """Получаем кверисет для basesname path."""
         post_id = self.kwargs.get('post_id')
-        post = get_object_or_404(Post, id=post_id)
-        new_queryset = post.comments.all()
+        new_queryset = Comment.objects.filter(post=post_id)
         return new_queryset
 
     def perform_create(self, serializer):
@@ -65,5 +64,5 @@ class CommentViewSet(viewsets.ModelViewSet):
         """При запросе на удаление данных
         осуществлять проверку прав."""
         if serializer.author != self.request.user:
-            raise PermissionDenied('Изменение чужого контента запрещено!')
+            raise PermissionDenied('Удаление чужого контента запрещено!')
         super().perform_destroy(serializer)

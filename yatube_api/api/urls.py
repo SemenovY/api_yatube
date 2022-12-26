@@ -1,5 +1,5 @@
 """Навигация и роутеры."""
-from rest_framework.routers import DefaultRouter
+from rest_framework.routers import SimpleRouter
 from django.urls import include, path
 from rest_framework.authtoken import views
 from .views import PostViewSet, GroupViewSet, CommentViewSet
@@ -7,7 +7,7 @@ from .views import PostViewSet, GroupViewSet, CommentViewSet
 app_name = 'api'
 
 
-router = DefaultRouter()
+router = SimpleRouter()
 
 router.register('posts', PostViewSet)
 router.register('groups', GroupViewSet)

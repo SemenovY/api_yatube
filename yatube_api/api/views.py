@@ -13,17 +13,19 @@ class PostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
 
     def perform_create(self, serializer):
-        """."""
+        """Получаем автора при создании."""
         serializer.save(author=self.request.user)
 
     def perform_update(self, serializer):
-        """При запросе на изменение или удаление данных
+        """При запросе на изменение данных
         осуществлять проверку прав."""
         if serializer.instance.author != self.request.user:
             raise PermissionDenied('Изменение чужого контента запрещено!')
         super(PostViewSet, self).perform_update(serializer)
 
     def perform_destroy(self, serializer):
+        """При запросе на удаление данных
+        осуществлять проверку прав."""
         if serializer.author != self.request.user:
             raise PermissionDenied('Изменение чужого контента запрещено!')
         super().perform_destroy(serializer)
@@ -47,8 +49,21 @@ class CommentViewSet(viewsets.ModelViewSet):
         return new_queryset
 
     def perform_create(self, serializer):
-        """."""
+        """Получаем автора при создании."""
         post_id = self.kwargs.get('post_id')
         post = get_object_or_404(Post, id=post_id)
         serializer.save(author=self.request.user, post=post)
 
+    def perform_update(self, serializer):
+        """При запросе на изменение данных
+        осуществлять проверку прав."""
+        if serializer.instance.author != self.request.user:
+            raise PermissionDenied('Изменение чужого контента запрещено!')
+        super(CommentViewSet, self).perform_update(serializer)
+
+    def perform_destroy(self, serializer):
+        """При запросе на удаление данных
+        осуществлять проверку прав."""
+        if serializer.author != self.request.user:
+            raise PermissionDenied('Изменение чужого контента запрещено!')
+        super().perform_destroy(serializer)

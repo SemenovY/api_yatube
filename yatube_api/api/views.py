@@ -23,6 +23,11 @@ class PostViewSet(viewsets.ModelViewSet):
             raise PermissionDenied('Изменение чужого контента запрещено!')
         super(PostViewSet, self).perform_update(serializer)
 
+    def perform_destroy(self, serializer):
+        if serializer.author != self.request.user:
+            raise PermissionDenied('Изменение чужого контента запрещено!')
+        super().perform_destroy(serializer)
+
 
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     """Вьюсет для модели Group."""

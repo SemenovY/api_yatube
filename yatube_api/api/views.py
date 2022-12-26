@@ -12,6 +12,10 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
+    def perform_create(self, serializer):
+        """."""
+        serializer.save(author=self.request.user)
+
     def perform_update(self, serializer):
         """При запросе на изменение или удаление данных
         осуществлять проверку прав."""

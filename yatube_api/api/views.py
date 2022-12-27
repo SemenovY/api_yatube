@@ -1,10 +1,10 @@
 """Viewset для работы с моделями."""
 from django.shortcuts import get_object_or_404
-from posts.models import Comment, Group, Post
 from rest_framework import viewsets
 from rest_framework.exceptions import PermissionDenied
 
 from .serializers import CommentSerializer, GroupSerializer, PostSerializer
+from posts.models import Comment, Group, Post
 
 
 class PostViewSet(viewsets.ModelViewSet):
@@ -44,7 +44,8 @@ class CommentViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         """Получаем кверисет для basesname path."""
         post_id = self.kwargs.get('post_id')
-        new_queryset = Comment.objects.filter(post=post_id)
+        post = get_object_or_404(Post, id=post_id)
+        new_queryset = post.comments.all()
         return new_queryset
 
     def perform_create(self, serializer):
